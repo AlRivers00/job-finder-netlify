@@ -40,34 +40,30 @@ async function searchJobs(resetPage = true) {
   resultsDiv.innerHTML += `<div class="spinner"></div>`;
 
   const query = `${keyword} in ${location}`;
-  const url = `/api/jobs?query=${encodeURIComponent(query)}`;
+  const url = `/api/key?query=${encodeURIComponent(query)}`;
 
-  try {
-    const response = await fetch(url, {
-      method: "GET",
-      headers: {
-        "X-RapidAPI-Key": API_KEY,
-        "X-RapidAPI-Host": API_HOST
-      }
-    });
 
-    const data = await response.json();
-    resultsDiv.innerHTML = resultsDiv.innerHTML.replace("<p>Loading...</p>", "");
+try {
+  const response = await fetch(url);
+  const data = await response.json();
+  document.querySelectorAll('.spinner').forEach(spinner => spinner.remove());
 
-    if (!data.data || data.data.length === 0) {
-      if (resetPage) resultsDiv.innerHTML = "<p>No jobs found.</p>";
-      loadMoreBtn.style.display = "none";
-      return;
-    }
-
-    fetchedJobs = fetchedJobs.concat(data.data);
-    renderJobs();
-
-    loadMoreBtn.style.display = "block";
-  } catch (err) {
-    resultsDiv.innerHTML += "<p>Error fetching jobs.</p>";
-    console.error(err);
+  if (!data.data || data.data.length === 0) {
+    if (resetPage) resultsDiv.innerHTML = "<p>No jobs found.</p>";
+    loadMoreBtn.style.display = "none";
+    return;
   }
+
+  fetchedJobs = fetchedJobs.concat(data.data);
+  renderJobs();
+  loadMoreBtn.style.display = "block";
+} catch (err) {
+  resultsDiv.innerHTML += "<p>Error fetching jobs.</p>";
+  console.error(err);
+}
+
+
+  
 }
 
 function renderJobs() {
