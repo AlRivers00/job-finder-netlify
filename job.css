@@ -1,0 +1,101 @@
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background: #f9f9f9;
+}
+
+h1 {
+  text-align: center;
+}
+
+.search-form {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+input {
+  padding: 10px;
+  width: 200px;
+}
+
+button {
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.job-card {
+  background: #fff;
+  padding: 15px;
+  margin: 10px auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  width: 80%;
+}
+
+.job-card h3 {
+  margin: 0 0 10px;
+}
+
+.job-card a {
+  display: inline-block;
+  margin-top: 10px;
+  color: blue;
+}
+button.save-btn {
+  margin-top: 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  font-size: 14px;
+}
+
+#results, #savedJobs {
+  margin-top: 20px;
+}
+
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  margin: 20px auto;
+  border: 4px solid #ccc;
+  border-top: 4px solid #333;
+  border-radius: 50%;
+  animation: spin 0.75s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+body.dark-mode {
+  background-color: #121212;
+  color: #f1f1f1;
+}
+
+body.dark-mode .job-card {
+  background-color: #1e1e1e;
+  color: #fff;
+}
+
+body.dark-mode .save-btn,
+body.dark-mode button {
+  background-color: #333;
+  color: white;
+  border: 1px solid #666;
+}
+
+body.dark-mode .history-container button {
+  background: #333;
+  color: #f0f0f0;
+  border: 1px solid #555;
+}
+
+body.dark-mode select,
+body.dark-mode input {
+  background-color: #222;
+  color: white;
+  border: 1px solid #555;
+}
