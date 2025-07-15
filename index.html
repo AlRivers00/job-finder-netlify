@@ -5,37 +5,55 @@
   <title>Job Finder</title>
   <link rel="stylesheet" href="job.css">
 </head>
+
 <body>
-  <button id="themeToggle">🌙 Toggle Dark Mode</button>
-  <h1>Find Jobs in Real Time</h1>
+  <nav role="navigation" class="main-nav" aria-label="Main navigation">
+    <div class="nav-container">
+      <a href="#">Home</a>
+      <a href="#savedJobs">Saved Jobs</a>
+      <a href="#">Filters</a>
+      <button id="themeToggle" aria-label="Toggle Dark Mode">🌙</button>
+    </div>
+  </nav>
 
-  <div id="searchHistory" class="history-container"></div>
+  <header>
+    <h1>Job Finder</h1>
+  </header>
 
-  <div class="search-container">
-    <input type="text" id="keyword" placeholder="Job title or keyword" />
-    <input type="text" id="location" placeholder="Location (e.g. New York)" />
-    <input type="text" id="companyFilter" placeholder="Filter by company name" />
-    <select id="jobType">
-      <option value="">Any Type</option>
-      <option value="fulltime">Full-time</option>
-      <option value="parttime">Part-time</option>
-      <option value="internship">Internship</option>
-    </select>
-    <button onclick="searchJobs(true)">Search</button>
-    <select id="sortOption" onchange="sortJobResults()">
-    <option value="">Sort by...</option>
-    <option value="title">Job Title (A-Z)</option>
-    <option value="type">Job Type</option>
-  </select>
-  </div>
+  <main>
+    <h1>Find Jobs in Real Time</h1>
 
-  <div id="results"></div>
-  <button id="loadMore" onclick="searchJobs(false)" style="display:none;">Load More</button>
+    <div id="searchHistory" class="history-container"></div>
 
-  <h2>Saved Jobs</h2>
-  <div id="savedJobs"></div>
+    <form class="search-container" onsubmit="searchJobs(true); return false;">
+      <input type="text" id="keyword" placeholder="Job title or keyword" />
+      <input type="text" id="location" placeholder="Location (e.g. New York)" />
+      <input type="text" id="companyFilter" placeholder="Filter by company name" />
+      <select id="jobType">
+        <option value="">Any Type</option>
+        <option value="fulltime">Full-time</option>
+        <option value="parttime">Part-time</option>
+        <option value="internship">Internship</option>
+      </select>
+      <button type="submit">Search</button>
+      <select id="sortOption" onchange="sortJobResults()">
+        <option value="">Sort by...</option>
+        <option value="title">Job Title (A-Z)</option>
+        <option value="type">Job Type</option>
+      </select>
+    </form>
 
-  
+    <div id="results"></div>
+    <button id="loadMore" onclick="searchJobs(false)" style="display:none;">Load More</button>
+
+    <h2>Saved Jobs</h2>
+    <div id="savedJobs"></div>
+  </main>
+
+  <footer role="contentinfo" class="main-footer">
+    <p>&copy; 2025 JobFinder App</p>
+  </footer>
+
   <script src="Job.js"></script>
 </body>
 </html>

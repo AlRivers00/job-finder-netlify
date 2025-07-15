@@ -4,8 +4,6 @@ let lastLocation = "";
 let lastType = "";
 let fetchedJobs = [];
 
-
-
 function debounce(func, delay = 500) {
   let timeout;
   return (...args) => {
@@ -13,7 +11,6 @@ function debounce(func, delay = 500) {
     timeout = setTimeout(() => func(...args), delay);
   };
 }
-
 
 async function searchJobs(resetPage = true) {
   const keyword = document.getElementById("keyword").value.trim();
@@ -40,30 +37,26 @@ async function searchJobs(resetPage = true) {
   resultsDiv.innerHTML += `<div class="spinner"></div>`;
 
   const query = `${keyword} in ${location}`;
-  const url = `/api/key?query=${encodeURIComponent(query)}`;
+  const url = `https://unique-youtiao-b8e1fc.netlify.app/.netlify/functions/key?query=${encodeURIComponent(query)}`;
 
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    document.querySelectorAll('.spinner').forEach(spinner => spinner.remove());
 
-try {
-  const response = await fetch(url);
-  const data = await response.json();
-  document.querySelectorAll('.spinner').forEach(spinner => spinner.remove());
+    if (!data.data || data.data.length === 0) {
+      if (resetPage) resultsDiv.innerHTML = "<p>No jobs found.</p>";
+      loadMoreBtn.style.display = "none";
+      return;
+    }
 
-  if (!data.data || data.data.length === 0) {
-    if (resetPage) resultsDiv.innerHTML = "<p>No jobs found.</p>";
-    loadMoreBtn.style.display = "none";
-    return;
+    fetchedJobs = fetchedJobs.concat(data.data);
+    renderJobs();
+    loadMoreBtn.style.display = "block";
+  } catch (err) {
+    resultsDiv.innerHTML += "<p>Error fetching jobs.</p>";
+    console.error(err);
   }
-
-  fetchedJobs = fetchedJobs.concat(data.data);
-  renderJobs();
-  loadMoreBtn.style.display = "block";
-} catch (err) {
-  resultsDiv.innerHTML += "<p>Error fetching jobs.</p>";
-  console.error(err);
-}
-
-
-  
 }
 
 function renderJobs() {
@@ -86,7 +79,6 @@ function renderJobs() {
     );
   }
 
-
   if (sortOption === "title") {
     jobsToRender.sort((a, b) => a.job_title.localeCompare(b.job_title));
   } else if (sortOption === "type") {
@@ -94,7 +86,6 @@ function renderJobs() {
       (a.job_employment_type || "").localeCompare(b.job_employment_type || "")
     );
   }
-
 
   resultsDiv.innerHTML = "";
   if (jobsToRender.length === 0) {
@@ -129,7 +120,6 @@ function sortJobResults() {
 
 function saveJob(job) {
   let saved = JSON.parse(localStorage.getItem("savedJobs") || "[]");
-
   const isDuplicate = saved.some(savedJob => savedJob.job_id === job.job_id);
   if (isDuplicate) {
     alert("This job is already saved.");
@@ -212,7 +202,6 @@ function showSearchHistory() {
 window.onload = () => {
   showSavedJobs();
   showSearchHistory();
-
   document.getElementById("companyFilter").addEventListener("input", renderJobs);
 
   
@@ -221,13 +210,16 @@ window.onload = () => {
     document.body.classList.add("dark-mode");
   }
 
-
+ 
   const toggleBtn = document.getElementById("themeToggle");
   if (toggleBtn) {
     toggleBtn.onclick = () => {
       document.body.classList.toggle("dark-mode");
       const isDark = document.body.classList.contains("dark-mode");
       localStorage.setItem("darkMode", isDark ? "enabled" : "disabled");
+
+      
+      toggleBtn.textContent = isDark ? "☀️" : "🌙";
     };
   }
 };
