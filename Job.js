@@ -222,10 +222,14 @@ window.onload = () => {
       toggleBtn.textContent = isDark ? "☀️" : "🌙";
     };
   }
-  
-  document.getElementById("toggleFilters").onclick = () => {
-  const filters = document.querySelector(".search-container");
-  filters.style.display = filters.style.display === "none" ? "flex" : "none";
-};
-
+ 
+  const filterBtn = document.getElementById("toggleFilters");
+  if (filterBtn) {
+    filterBtn.onclick = () => {
+      const filters = document.querySelector(".search-container");
+      if (filters) {
+        filters.style.display = filters.style.display === "none" ? "flex" : "none";
+          }
+    };
+  }
 };
