@@ -11,7 +11,7 @@
     <div class="nav-container">
       <a href="#">Home</a>
       <a href="#savedJobs">Saved Jobs</a>
-      <a href="#">Filters</a>
+      <button id="togglefilters">Filters</button>
       <button id="themeToggle" aria-label="Toggle Dark Mode">🌙</button>
     </div>
   </nav>
@@ -25,7 +25,7 @@
 
     <div id="searchHistory" class="history-container"></div>
 
-    <form class="search-container" onsubmit="searchJobs(true); return false;">
+    <form class="search-container" id="filters" onsubmit="searchJobs(true); return false;">
       <input type="text" id="keyword" placeholder="Job title or keyword" />
       <input type="text" id="location" placeholder="Location (e.g. New York)" />
       <input type="text" id="companyFilter" placeholder="Filter by company name" />

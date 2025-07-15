@@ -222,4 +222,10 @@ window.onload = () => {
       toggleBtn.textContent = isDark ? "☀️" : "🌙";
     };
   }
+  
+  document.getElementById("toggleFilters").onclick = () => {
+  const filters = document.querySelector(".search-container");
+  filters.style.display = filters.style.display === "none" ? "flex" : "none";
+};
+
 };
